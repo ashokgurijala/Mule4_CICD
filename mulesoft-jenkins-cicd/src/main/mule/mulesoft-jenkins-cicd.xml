@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="211e686f-bc73-4d7a-8bd4-b02a727e859d" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="e9a69141-dbfe-46fc-8e47-6392e1ad65f6" file="config.yaml" />
+	<flow name="mulesoft-jenkins-cicdFlow" doc:id="590e343e-b966-4f6a-aa53-01533966e361" >
+		<http:listener doc:name="Listener" doc:id="cd3e92df-4038-478e-9dec-65b19513cff0" config-ref="HTTP_Listener_config" path="/jenkinstest"/>
+		<set-payload value='#[{"Status": "Success",
+"Message": "Jenkins CICD is successful Test1"}]' doc:name="Set Payload" doc:id="18b7bb24-c2cd-4501-919b-db0a484bb968" />
+		<logger level="INFO" doc:name="Logger" doc:id="496365af-82c3-4833-985f-7e37639703d7" message="#[payload]"/>
+	</flow>
+</mule>
